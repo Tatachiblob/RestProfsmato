@@ -139,7 +139,7 @@ if(!isset($_GET['username'])){
               <div><p class="card-text" id="about"></p></div>
               <br />
               <h4 class="card-title">Statistics</h4>
-              <div><p class="card-text">Temp 0</p></div>
+              <div><p class="card-text" id="numRev">Number of Reviews: </p></div>
               <br />
               <?php if($_SESSION['username'] == $_GET['username']){ ?>
               <button id="editBtn" type="button" class="btn btn-success bmd-btn-fab" data-toggle="modal" data-target="#exampleModal2" style="float:right;" id="edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
@@ -377,7 +377,7 @@ if(!isset($_GET['username'])){
               $('#CEDoption').attr('selected', true);
               break;
           }
-
+          loadNumberOfReviews();
           /*
           $('.profpic').attr('style', 'background-image:url(' + imageSrc +');');
           $('#genname').html(firstName + " " + lastName);
@@ -394,6 +394,20 @@ if(!isset($_GET['username'])){
 
       showUserProfile();
     });
+
+    function loadNumberOfReviews(){
+      $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/profsmatodb/reviews?filter={"studentusername":"<?php echo $_GET['username']; ?>"}',
+        dataType: "json",
+        success: function(response){
+          $('#numRev').html("No. of Reviews: " + response._returned);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
 
     function filedialog(){
       document.getElementById("upload").click();
@@ -444,7 +458,8 @@ if(!isset($_GET['username'])){
             $('#e').html(response[0].email);
           }else{
             console.log("No such user");
-            window.location.replace("/com.phantomfive.profsmato/UNKNOWN");
+            console.log(response);
+            //window.location.replace("/com.phantomfive.profsmato/UNKNOWN");
           }
         },
         error: function(jqXHR, exception){

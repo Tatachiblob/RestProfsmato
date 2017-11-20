@@ -161,10 +161,10 @@ if($_SESSION['userType'] != "admin"){
         </div><!--/.col-md-7-->
       </div><!--/.row mb-3-->
       <div class="row mb-3">
-        <div class="col-md-12">
-          <div class="table-responsive">
-            <table class="table table-hover table-bordered nowrap material-shadow" cellspacing="0" width="100%" id="yutangina">
-              <thead class="thead-inverse">
+  			<div class="col-md-12">
+  				<div class="table-responsive">
+  					<table class="table table-hover table-bordered nowrap material-shadow" cellspacing="0" width="100%" id="yutangina">
+  						<thead class="thead-inverse">
                 <tr>
   								<th>Username</th>
   								<th>Last Name</th>
@@ -255,7 +255,7 @@ if($_SESSION['userType'] != "admin"){
     		$("#filters").toggle(300);
     	});
 
-      
+
     });
 
     function getStudents(){
@@ -279,6 +279,21 @@ if($_SESSION['userType'] != "admin"){
                  + '</tr>';
           }
           $('#studentData').html(yuta);
+          $('#yutangina').DataTable({
+        		responsive: {
+        			details: {
+        				display: $.fn.dataTable.Responsive.display.modal( {
+        					header: function ( row ) {
+        						var data = row.data();
+        						return 'Details for '+data[0]+' '+data[1];
+        					}
+        				} ),
+        				renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+        					tableClass: 'table'
+        				} )
+        			}
+        		}
+        	});
         },
         error: function(jqXHR, exception){
           console.log(jqXHR);

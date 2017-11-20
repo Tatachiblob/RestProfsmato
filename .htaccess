@@ -9,6 +9,7 @@ RewriteRule ^Admin/Registration?$ userRequest.php
 RewriteRule ^Admin/ManageUsers?$ adminManageUsers.php
 RewriteRule ^Students/([0-9a-zA-Z]+) studentProfile.php?username=$1
 RewriteRule ^Students/ studentProfile.php
+RewriteRule ^College/([A-Z]+)/([A-Z]+)/([0-9]+)/([0-9a-zA-Z]+) fullReview.php?college=$1&department=$2&profid=$3&reviewid=$4
 RewriteRule ^College/([A-Z]+)/([A-Z]+)/([0-9]+) professors.php?college=$1&department=$2&profid=$3
 RewriteRule ^College/([A-Z]+)/([A-Z]+) department.php?college=$1&department=$2
 RewriteRule ^College/([A-Z]+) college.php?college=$1

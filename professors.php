@@ -123,15 +123,10 @@ if($_SESSION['userType'] != "normal"){
                               <div class="form-group">
                                 <label for="rating" class="text-black">Rating:</label>
                                 <select class="custom-select" name="rating" id="rating">
-                                  <option value="0.5" selected>0.5</option>
-                                  <option value="1.0">1.0</option>
-                                  <option value="1.5">1.5</option>
+                                  <option value="1.0" selected id="default">1.0</option>
                                   <option value="2.0">2.0</option>
-                                  <option value="2.5">2.5</option>
                                   <option value="3.0">3.0</option>
-                                  <option value="3.5">3.5</option>
                                   <option value="4.0">4.0</option>
-                                  <option value="4.5">4.5</option>
                                   <option value="5.0">5.0</option>
                                 </select>
                               </div><!--form-group-->
@@ -184,14 +179,14 @@ if($_SESSION['userType'] != "normal"){
               </div>
               <br />
               <div>
-                <p class="card-text rating">
+                <p class="card-text rating" id="pstar">
         			    <span><i class="fa fa-star"></i></span>
           				<span><i class="fa fa-star"></i></span>
           				<span><i class="fa fa-star"></i></span>
           				<span><i class="fa fa-star"></i></span>
           				<span><i class="fa fa-star-half-o"></i></span>
         			  </p>
-                <p class="text-secondary">4.5 out of 5 stars(Sample Rating)</p>
+                <p class="text-secondary" id="profRate"></p>
               </div>
               <br />
               <div>
@@ -246,7 +241,72 @@ if($_SESSION['userType'] != "normal"){
         }
       });
       loadReviews();
+      loadAvg();
     });
+
+    function loadAvg(){
+      var profid = <?php echo $_GET['profid']; ?>;
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/profsmatodb/reviews?filter={'profid':"+profid+"}",
+        dataType: "json",
+        success: function(response){
+          response = response._embedded;
+          var rate1 = 0;
+          var rate2 = 0;
+          var rate3 = 0;
+          var rate4 = 0;
+          var rate5 = 0;
+          for(var i = 0; i < response.length; i++){
+            if(response[i].rating == 1){rate1++;}
+            if(response[i].rating == 2){rate2++;}
+            if(response[i].rating == 3){rate3++;}
+            if(response[i].rating == 4){rate4++;}
+            if(response[i].rating == 5){rate5++;}
+          }
+          rate1 = rate1*1;
+          rate2 = rate2*2;
+          rate3 = rate3*3;
+          rate4 = rate4*4;
+          rate5 = rate5*5;
+          var sum = rate1 + rate2 + rate3 + rate4 + rate5;
+          var rate = Math.floor((sum/response.length) * 10) / 10;
+          if(isNaN(rate)){
+            rate = 0;
+          }
+          $('#profRate').html(rate + " out of 5 stars");
+
+          var stars = "";
+          if(rate < 0.5){
+            stars = '<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 1){
+            stars = '<i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 1.5){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 2){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 2.5){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 3){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 3.5){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 4){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 4.5){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>';
+          }else if(rate < 5){
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i>';
+          }else{
+            stars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>';
+          }
+          $('#pstar').html(stars);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
 
 
     function like(profid, poster){
@@ -343,7 +403,12 @@ if($_SESSION['userType'] != "normal"){
           complete: function(jqXHR, exception){
             if(jqXHR.status == 201){
               $('#errMsg').html("<h4>Your Review has been posted!</h4>");
+              $('#title').val("");
+              $('#reviewText').val("");
+              $('#rating').val("");
+              $('#rating').val(0.5);
               loadReviews();
+              loadAvg();
             }else if(jqXHR.status == 409){
               console.log(jqXHR);
               $('#errMsg').html("<h4>You have already posted your review...</h4>");
@@ -439,17 +504,17 @@ if($_SESSION['userType'] != "normal"){
             var thumbs = '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x" onclick=like('+response[i].profid+',"'+response[i].studentusername+'")></i><text> </text><div class="fa fa-thumbs-down fa-2x" onclick=dislike('+response[i].profid+',"'+response[i].studentusername+'")></div></div></div>';
 
             if(response[i].likes.indexOf("<?php echo $_SESSION['username'] ?>") != -1){
-              thumbs = '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x color-like" onclick=like('+response[i].profid+',"'+response[i].studentusername+'")></i><text> </text><div class="fa fa-thumbs-down fa-2x" onclick=dislike('+response[i].profid+',"'+response[i].studentusername+'")></div></div></div>';
+              thumbs = '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x color-like"></i><text> </text><div class="fa fa-thumbs-down fa-2x" onclick=dislike('+response[i].profid+',"'+response[i].studentusername+'")></div></div></div>';
             }
 
             if(response[i].dislikes.indexOf("<?php echo $_SESSION['username'] ?>") != -1){
-              thumbs = '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x" onclick=like('+response[i].profid+',"'+response[i].studentusername+'")></i><text> </text><div class="fa fa-thumbs-down fa-2x color-dislike" onclick=dislike('+response[i].profid+',"'+response[i].studentusername+'")></div></div></div>';
+              thumbs = '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x" onclick=like('+response[i].profid+',"'+response[i].studentusername+'")></i><text> </text><div class="fa fa-thumbs-down fa-2x color-dislike"></div></div></div>';
             }
 
-            review += '<div class="col-md-2" style="max-width: 4rem;"><p class="card-text"><a href="/com.phantomfive.profsmato/Students/' + response[i].studentusername + '"><img class="rounded-circle" src="/com.phantomfive.profsmato/assets/studentpic/' + response[i].profile + '" alt="Generic placeholder image" style="width:55px;"></a></p></div>'
-                    + '<div class="col-md-10"><text><a href=""/com.phantomfive.profsmato/Students/' + response[i].studentusername + '"">' + response[i].studentusername + '</a></text><text class="text-secondary"></text>'
+            review += '<div class="col-md-2" style="max-width: 4rem;"><p class="card-text"><a href=/com.phantomfive.profsmato/Students/' + response[i].studentusername + '><img class="rounded-circle" src="/com.phantomfive.profsmato/assets/studentpic/' + response[i].profile + '" alt="Generic placeholder image" style="width:55px;"></a></p></div>'
+                    + '<div class="col-md-10"><text><a href="/com.phantomfive.profsmato/Students/' + response[i].studentusername + '">' + response[i].studentusername + '</a></text><text class="text-secondary"></text>'
                     + ra + '<br />'
-                    + '<p style="margin: auto;">' + response[i].body + '<br /><a href="#"> Click here for full review</a></p>'
+                    + '<p style="margin: auto;">' + response[i].body + '<br /><a href='+ window.location.href + '/' + response[i]._id.$oid + '> Click here for full review</a></p>'
                     + thumbs;
                     //+ '<div style="text-align: right"><text class="text-secondary">Was this helpful? </text><i class="fa fa-thumbs-up fa-2x" onclick="like()"></i><text> </text><div class="fa fa-thumbs-down fa-2x" onclick="dislike"></div></div></div>';
 

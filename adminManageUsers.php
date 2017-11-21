@@ -160,26 +160,7 @@ if($_SESSION['userType'] != "admin"){
           </div><!--/#filters-->
         </div><!--/.col-md-7-->
       </div><!--/.row mb-3-->
-      <div class="row mb-3">
-  			<div class="col-md-12">
-  				<div class="table-responsive">
-  					<table class="table table-hover table-bordered nowrap material-shadow" cellspacing="0" width="100%" id="yutangina">
-  						<thead class="thead-inverse">
-                <tr>
-  								<th>Username</th>
-  								<th>Last Name</th>
-  								<th>First Name</th>
-  								<th>Email</th>
-  								<th>College</th>
-  								<th>Status</th>
-                </tr>
-              </thead><!--/.thead-inverse-->
-              <tbody id="studentData">
-              </tbody>
-            </table>
-          </div><!--/.table-responsive-->
-        </div><!--/.col-md-12-->
-      </div><!--/.row mb-3-->
+      <div id="datatable"></div>
       <div class="sufab" id="fab">
     		<i class="fa fa-arrow-down" aria-hidden="true" id="assist" style="display:block;text-align:center;font-size:5rem;opacity:0;"></i>
     		<paper-fab class="blue" icon="create" data-toggle="modal" data-target="#exampleModal" id="editThis"></paper-fab>
@@ -267,18 +248,26 @@ if($_SESSION['userType'] != "admin"){
         success: function(response){
           console.log(response);
           response = response._embedded;
-          var yuta = "";
+          var yuta = '<div class="row mb-3">'
+                          + '<div class="col-md-12">'
+                          + '<div class="table-responsive">'
+                          + '<table class="table table-hover table-bordered nowrap material-shadow" cellspacing="0" width="100%" id="yutangina">'
+                          + '<thead class="thead-inverse">'
+                          + '<tr><th>ID Number</th><th>Username</th><th>Last Name</th><th>First Name</th><th>Email</th><th>College</th><th>Status</th></tr></thead><tbody>';
           for(var i = 0; i < response.length; i++){
             yuta += '<tr>'
-                 + '<td id="username">' + response[i].username + '</td>'
-                 + '<td id="lName">' + response[i].lastname + '</td>'
-                 + '<td id="fName">' + response[i].firstname + '</td>'
-                 + '<td id="eMail">' + response[i].email + '</td>'
-                 + '<td id="college">' + response[i].college + '</td>'
-                 + '<td id="status">' + response[i].status + '</td>'
+                 + '<td>' + response[i].idnum + '</td>'
+                 + '<td>' + response[i].username + '</td>'
+                 + '<td>' + response[i].lastname + '</td>'
+                 + '<td>' + response[i].firstname + '</td>'
+                 + '<td>' + response[i].email + '</td>'
+                 + '<td>' + response[i].college + '</td>'
+                 + '<td>' + response[i].status + '</td>'
                  + '</tr>';
           }
-          $('#studentData').html(yuta);
+          yuta += '</tbody></table></div></div></div>';
+          $('#datatable').html(yuta);
+
           $('#yutangina').DataTable({
         		responsive: {
         			details: {
@@ -293,6 +282,22 @@ if($_SESSION['userType'] != "admin"){
         				} )
         			}
         		}
+        	});
+
+          $("#yutangina_filter").hide();
+
+          $('#searchpogi').on('keypress keyup keydown',function(event) {
+        	  // create the event
+        	   var press = jQuery.Event(event.type);
+        	   var code = event.keyCode || event.which;
+        	   press.which = code;
+        	  // trigger
+        	  $("input[type=search]").val(this.value);
+        	  $("input[type=search]").trigger(event.type, {'event': press});
+        	});
+
+          $("#butt_filters").click(function(){
+        		$("#filters").toggle(300);
         	});
         },
         error: function(jqXHR, exception){

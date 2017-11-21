@@ -107,9 +107,9 @@ if($_SESSION['userType'] != "admin"){
   				</div><!--/.input-group-->
           <br class="d-md-none d-lg-none"  />
         </div><!--/.col-md-6-->
-        <div class="col-md-6">
+        <!--<div class="col-md-6">
   				<button type="button" class="btn btn-raised btn-primary" id="butt_filters">ADVANCED FILTERS</button>
-  			</div><!--/.col-md-6-->
+  			</div>/.col-md-6-->
       </div><!--/.row mb-3-->
       <div class="row mb-3">
         <div class="col-md-7">
@@ -162,40 +162,6 @@ if($_SESSION['userType'] != "admin"){
       $('body').bootstrapMaterialDesign();
       initScreen();
       readyPendingStudents();
-      /*
-      $('#yutangina').DataTable({
-    		responsive: {
-    			details: {
-    				display: $.fn.dataTable.Responsive.display.modal( {
-    					header: function ( row ) {
-    						var data = row.data();
-    						return 'Details for '+data[0]+' '+data[1];
-    					}
-    				} ),
-    				renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-    					tableClass: 'table'
-    				} )
-    			}
-    		}
-    	});*/
-
-      $("#yutangina_filter").hide();
-      /*
-      $('#searchpogi').on('keypress keyup keydown',function(event) {
-    	  // create the event
-    	   var press = jQuery.Event(event.type);
-    	   var code = event.keyCode || event.which;
-    	   press.which = code;
-    	  // trigger
-    	  $("input[type=search]").val(this.value);
-    	  $("input[type=search]").trigger(event.type, {'event': press});
-    	});
-
-      $("#butt_filters").click(function(){
-    		$("#filters").toggle(300);
-    	});*/
-
-
     });
 
     function readyPendingStudents(){
@@ -211,7 +177,7 @@ if($_SESSION['userType'] != "admin"){
                           + '<div class="table-responsive">'
                           + '<table class="table table-hover table-bordered nowrap material-shadow" cellspacing="0" width="100%" id="yutangina">'
                           + '<thead class="thead-inverse">'
-                          + '<tr><th>Username</th><th>Last Name</th><th>First Name</th><th>Email</th><th>College</th><th>Approval</th></tr><tbody>';
+                          + '<tr><th>ID Number</th><th>Username</th><th>Last Name</th><th>First Name</th><th>Email</th><th>College</th><th>Approval</th></tr><tbody>';
           for(var i = 0; i < a.length; i++){
             var b = "";
             if((i + 1) % 2 == 0){
@@ -220,6 +186,7 @@ if($_SESSION['userType'] != "admin"){
               b = "odd";
             }
             studentData += '<tr>'
+                         + '<td>' + a[i].idnum + '</td>'
                          + '<td>' + a[i].username + '</td>'
                          + '<td>' + a[i].lastname + '</td>'
                          + '<td>' + a[i].firstname + '</td>'
@@ -230,6 +197,38 @@ if($_SESSION['userType'] != "admin"){
           }
           studentData += '</tbody></table></div></div></div>';
           $('#datatable').html(studentData);
+          $('#yutangina').DataTable({
+        		responsive: {
+        			details: {
+        				display: $.fn.dataTable.Responsive.display.modal( {
+        					header: function ( row ) {
+        						var data = row.data();
+        						return 'Details for '+data[0]+' '+data[1];
+        					}
+        				} ),
+        				renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+        					tableClass: 'table'
+        				} )
+        			}
+        		}
+        	});
+
+          $("#yutangina_filter").hide();
+
+          $('#searchpogi').on('keypress keyup keydown',function(event) {
+        	  // create the event
+        	   var press = jQuery.Event(event.type);
+        	   var code = event.keyCode || event.which;
+        	   press.which = code;
+        	  // trigger
+        	  $("input[type=search]").val(this.value);
+        	  $("input[type=search]").trigger(event.type, {'event': press});
+        	});
+
+          $("#butt_filters").click(function(){
+        		$("#filters").toggle(300);
+        	});
+
         },
         error: function(jqXHR, exception){
           console.log(jqXHR);

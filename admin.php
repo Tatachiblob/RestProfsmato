@@ -141,7 +141,7 @@ if($_SESSION['userType'] != "admin"){
   							<i class="fa fa-info-circle fa-3x"></i>
   						</div>
   						<h6 class="text-uppercase">Requests</h6>
-  						<h1 class="display-4" id="numRequests">0</h1>
+  						<h1 class="display-4" id="numRequests"></h1>
   					</div>
   				</div>
   			</div>
@@ -156,11 +156,11 @@ if($_SESSION['userType'] != "admin"){
                   <th>ID</th>
                   <th>College</th>
                   <th>Name</th>
-                  <th>Avg. Rating</th>
+                  <th>Total Ratings</th>
                   <th>Reviews</th>
                 </tr>
               </thead>
-              <tbody><div id="mostReviewed"></div></tbody>
+              <tbody id="mostReviewed"></tbody>
             </table><!--/.table table-striped-->
           </div><!--/.table=responsive meterial-shadow-->
         </div><!--/.col-md-6-->
@@ -173,11 +173,11 @@ if($_SESSION['userType'] != "admin"){
                   <th>ID</th>
                   <th>College</th>
                   <th>Name</th>
-                  <th>Avg. Rating</th>
+                  <th>Total Ratings</th>
                   <th>Reviews</th>
                 </tr>
               </thead>
-              <tbody><div id="mostRated"></div></tbody>
+              <tbody id="mostRated"></tbody>
             </table><!--/.table table-striped-->
           </div><!--/.table=responsive meterial-shadow-->
         </div>
@@ -198,7 +198,83 @@ if($_SESSION['userType'] != "admin"){
       initScreen();
       userCount();
       profCounts();
+      loadMostReviewed();
+      loadMostRated();
     });
+
+    function loadMostReviewed(){
+      var aggrRest = "http://localhost:8080/profsmatodb/reviews/_aggrs/topFiveMostReviews";
+      $.ajax({
+        type: "GET",
+        url: aggrRest,
+        dataType: "json",
+        success: function(response){
+          response = response._embedded;
+          var loading = '';
+          for(var i = 0; i < response.length; i++){
+            console.log(response[i]);
+            $.ajax({
+              type: "GET",
+              async: false,
+              url: "http://localhost:8080/profsmatodb/professors?filter={'profid':" + response[i]._id + "}",
+              dataType: "json",
+              success: function(response2){
+                response2 = response2._embedded;
+                loading += '<tr>'
+                         + '<td>' + response2[0].profid + '</td>'
+                         + '<td>' + response2[0].college + '</td>'
+                         + '<td>' + response2[0].firstname + '</td>'
+                         + '<td>' + response[i].totalRating + '</td>'
+                         + '<td>' + response[i].reviewCount + '</td>'
+                         + '</tr>';
+              }
+            });
+          }
+          //console.log("EDN: " + loading);
+          $('#mostReviewed').html(loading);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
+
+    function loadMostRated(){
+      var aggrRest = "http://localhost:8080/profsmatodb/reviews/_aggrs/topFiveMostRated";
+      $.ajax({
+        type: "GET",
+        url: aggrRest,
+        dataType: "json",
+        success: function(response){
+          response = response._embedded;
+          var loading = '';
+          for(var i = 0; i < response.length; i++){
+            console.log(response[i]);
+            $.ajax({
+              type: "GET",
+              async: false,
+              url: "http://localhost:8080/profsmatodb/professors?filter={'profid':" + response[i]._id + "}",
+              dataType: "json",
+              success: function(response2){
+                response2 = response2._embedded;
+                loading += '<tr>'
+                         + '<td>' + response2[0].profid + '</td>'
+                         + '<td>' + response2[0].college + '</td>'
+                         + '<td>' + response2[0].firstname + '</td>'
+                         + '<td>' + response[i].totalRating + '</td>'
+                         + '<td>' + response[i].reviewCount + '</td>'
+                         + '</tr>';
+              }
+            });
+          }
+          //console.log("EDN: " + loading);
+          $('#mostRated').html(loading);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
 
     function profCounts(){
       var rest = "http://localhost:8080/profsmatodb/professors";
@@ -223,8 +299,18 @@ if($_SESSION['userType'] != "admin"){
         url: rest,
         dataType: "json",
         success: function(response){
-          console.log(response);
-          $('#numUsers').html(response._returned);
+          var pending = 0;
+          var active = 0;
+          for(var i = 0; i < response._embedded.length; i++){
+            if(response._embedded[i].status == "pending"){
+              pending++;
+            }
+            if(response._embedded[i].status == "active"){
+              active++;
+            }
+          }
+          $('#numUsers').html(active);
+          $('#numRequests').html(pending);
         },
         error: function(jqXHR, exception){
           console.log(jqXHR);

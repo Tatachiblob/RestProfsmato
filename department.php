@@ -225,7 +225,7 @@ if(!isset($_GET['department'])){
           <div class="form-group">
             <label class="mr-sm-2" for="profcollege" style="color:grey;">Professor College</label>
             <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="profcollege" name="profCol" onchange="checkDept(this.value)">
-              <option selected disabled value="">College</option>
+              <option selected disabled value="" id="defaultSelect">College</option>
   						<option value="CCS">CCS</option>
   						<option value="COL">COL</option>
   						<option value="CLA">CLA</option>
@@ -242,11 +242,16 @@ if(!isset($_GET['department'])){
               <option selected disabled value="">Department</option>
             </select>
           </div><!--/.form-group-->
-          <input class="form-control" type="text" placeholder="First Name of Professor">
+          <input class="form-control" type="number" placeholder="ID Number of Prof" id="idnum">
           <br />
-          <input class="form-control" type="text" placeholder="Last Name of Professor">
+          <input class="form-control" type="text" placeholder="First Name" id="fname">
           <br />
-          <button type="button" class="btn btn-primary btn-md btn-raised">SUBMIT</button>
+          <input class="form-control" type="text" placeholder="Last Name" id="lname">
+          <br />
+          <input class="form-control" type="email" placeholder="Email" id="email">
+          <br />
+          <button type="button" class="btn btn-primary btn-md btn-raised" onclick="submitProf()">SUBMIT</button>
+          <div id="error"></div>
         </div><!--/.container-->
       </div><!--/.jumbotron-->
       <div class="screen">
@@ -264,6 +269,44 @@ if(!isset($_GET['department'])){
   </body>
   <?php include 'navbarStlye.html' ?>
   <script>
+    function submitProf(){
+      var college = $('#profcollege').val();
+      var departments = $('#profdept').val().split(',');
+      var id = $('#idnum').val();
+      id = parseInt(id);
+      var firstName = $('#fname').val();
+      var lastName = $('#lname').val();
+      var email = $('#email').val();
+
+      if(id == "" || firstName == "" || lastName == "" || email == ""){
+        $('#error').html("<h4>Please fill up all fields</h4>");
+      }else if(!email.endsWith("@dlsu.edu.ph")){
+        $('#error').html("<h4>Please enter a valid dlsu email</h4>");
+      }else{
+        var restBody = '{"profid":' + id + ', "lastname":"' + lastName + '", firstname: "' + firstName + '", "college": "' + college + '", "email": "' + email + '", "subjects":[], "profilepic": "default.png", "departments":["' + departments[0] + '", "' + departments[1] + '"], "aboutprof":"", "status":"pending"}';
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/profsmatodb/professors",
+          processData: false,
+          contentType: "application/json",
+          data: restBody,
+          complete: function(jqXHR, exception){
+            if(jqXHR.status == 200 || jqXHR.status == 201){
+              $('#error').html("Professor Request Submitted. The admins will confirm your request.");
+              $('#defaultSelect').attr('selected', true);
+              $('#idnum').val("");
+              $('#fname').val("");
+              $('#lname').val("");
+              $('#email').val("");
+            }else{
+              console.log(jqXHR);
+            }
+          }
+        });
+      }
+
+    }
+
     $(document).ready(function(){
       var objId = "<?php echo $_SESSION['objId']; ?>";
       var firstName = "";
@@ -295,7 +338,7 @@ if(!isset($_GET['department'])){
 
     function getProfData(department){
       var profHTML = '<div class="row">';
-      var rester = "http://localhost:8080/profsmatodb/professors?filter={'departments':'" + department + "'}";
+      var rester = "http://localhost:8080/profsmatodb/professors?filter={'departments':'" + department + "', 'status':'active'}";
       $.ajax({
         type: "GET",
         url: rester,
@@ -330,56 +373,56 @@ if(!isset($_GET['department'])){
       var optionHtml = "";
       switch (college){
         case "CCS":
-          optionHtml = '<option value="CT">Computer Technology</option>'
-                     + '<option value="IT">Information Technology</option>'
-                     + '<option value="ST">Software Technology</option>';
+          optionHtml = '<option value="CT,Computer Technology">Computer Technology</option>'
+                     + '<option value="IT,Information Technology">Information Technology</option>'
+                     + '<option value="ST,Software Technology">Software Technology</option>';
           break;
         case "COS":
-          optionHtml = '<option value="BIO">Biology</option>'
-                     + '<option value="CHEM">Chemistry</option>'
-                     + '<option value="MATH">Mathematics</option>'
-                     + '<option value="PHY">Physics</option>'
+          optionHtml = '<option value="BIO,Biology">Biology</option>'
+                     + '<option value="CHEM,Chemistry">Chemistry</option>'
+                     + '<option value="MATH,Mathematics">Mathematics</option>'
+                     + '<option value="PHY,Physics">Physics</option>'
           break;
         case "COL":
-          optionHtml = '<option value="COL">Law</option>';
+          optionHtml = '<option value="COL,College of Law">Law</option>';
           break;
         case "CLA":
-          optionHtml = '<option value="BHS">Behavioral Sciences</option>'
-                     + '<option value="COM">Communications</option>'
-                     + '<option value="FIL">Filipino</option>'
-                     + '<option value="HIS">History</option>'
-                     + '<option value="INTS">International Studies</option>'
-                     + '<option value="LIT">Literature</option>'
-                     + '<option value="PHILO">Philosophy</option>'
-                     + '<option value="POLISI">Political Science</option>'
-                     + '<option value="PSY">Psychology</option>'
-                     + '<option value="THEO">Theology</option>';
+          optionHtml = '<option value="BHS,Behavioral Sciences">Behavioral Sciences</option>'
+                     + '<option value="COM,Communications">Communications</option>'
+                     + '<option value="FIL,Filipino">Filipino</option>'
+                     + '<option value="HIS,History">History</option>'
+                     + '<option value="INTS,Insternational Studies">International Studies</option>'
+                     + '<option value="LIT,Literature">Literature</option>'
+                     + '<option value="PHILO,Philosophy">Philosophy</option>'
+                     + '<option value="POLISI,Political Science">Political Science</option>'
+                     + '<option value="PSY,Psychology">Psychology</option>'
+                     + '<option value="THEO,Theology">Theology</option>';
           break;
         case "GCOE":
-          optionHtml = '<option value="CHEME">Chemical Engineering</option>'
-                     + '<option value="CE">Civil Engineering</option>'
-                     + '<option value="ECE">Electronics and Communications Engineering</option>'
-                     + '<option value="IE">Industrial Engineering</option>'
-                     + '<option value="MEM">Manufacturing Engineering and Management</option>'
-                     + '<option value="ME">Mechanical Engineering</option>';
+          optionHtml = '<option value="CHEME,Chemical Engineering">Chemical Engineering</option>'
+                     + '<option value="CE,Civil Engineering">Civil Engineering</option>'
+                     + '<option value="ECE,Electronics and Communications Engineering">Electronics and Communications Engineering</option>'
+                     + '<option value="IE,Industrial Engineering">Industrial Engineering</option>'
+                     + '<option value="MEM,Manufacturing Engineering and Management">Manufacturing Engineering and Management</option>'
+                     + '<option value="ME,Mechanical Engineering">Mechanical Engineering</option>';
           break;
         case "COB":
-          optionHtml = '<option value="ACC">Accountancy</option>'
-                     + '<option value="CL">Commercial Law</option>'
-                     + '<option value="DSID">Decision Sciences & Innovation</option>'
-                     + '<option value="MFI">Management of Financial Institutions</option>'
-                     + '<option value="MOD">Management of Organization</option>'
-                     + '<option value="MM">Marketing Management</option>';
+          optionHtml = '<option value="ACC,Accountancy">Accountancy</option>'
+                     + '<option value="CL,Commercial Law">Commercial Law</option>'
+                     + '<option value="DSID,Decision Sciences & Innovation">Decision Sciences & Innovation</option>'
+                     + '<option value="MFI,Management of Financial Institutions">Management of Financial Institutions</option>'
+                     + '<option value="MOD,Management of Organization">Management of Organization</option>'
+                     + '<option value="MM,Marketing Management">Marketing Management</option>';
           break;
         case "SOE":
-          optionHtml = '<option value="ECO">Economic</option>';
+          optionHtml = '<option value="ECO,Economics">Economics</option>';
           break;
         case "CED":
-          optionHtml = '<option value="CEPD">Counseling and Educational Psychology</option>'
-                     + '<option value="DEAL">Department of English and Applied Linguistics</option>'
-                     + '<option value="ELM">Educational Leadership and Management</option>'
-                     + '<option value="PE">Physical Education</option>'
-                     + '<option value="SE">Science Education</option>'
+          optionHtml = '<option value="CEPD,Counseling and Educational Psychology">Counseling and Educational Psychology</option>'
+                     + '<option value="DEAL,Department of English and Applied Linguistics">Department of English and Applied Linguistics</option>'
+                     + '<option value="ELM,Educational Leadership and Management">Educational Leadership and Management</option>'
+                     + '<option value="PE,Physical Education">Physical Education</option>'
+                     + '<option value="SE,Science Education">Science Education</option>'
           break;
       }
       $('#profdept').html(optionHtml);

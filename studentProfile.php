@@ -432,19 +432,19 @@ if(!isset($_GET['username'])){
 
             for(var i = 0; i < snsJson.length; i++){
               if(snsJson[i].type == "facebook"){
-                sns += '<a href="https://www.facebook.com/' + snsJson[i].link + '" class="text-black"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
+                sns += '<a href="https://www.facebook.com/' + snsJson[i].link + '" class="text-black" target="_blank"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
               }
               if(snsJson[i].type == "twitter"){
-                sns += '<a href="https://www.twitter.com/' + snsJson[i].link + '" class="text-black"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
+                sns += '<a href="https://www.twitter.com/' + snsJson[i].link + '" class="text-black" target="_blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
               }
               if(snsJson[i].type == "instagram"){
-                sns += '<a href="https://www.instagram.com/' + snsJson[i].link + '" class="text-black"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
+                sns += '<a href="https://www.instagram.com/' + snsJson[i].link + '" class="text-black" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
               }
               if(snsJson[i].type == "steam"){
-                sns += '<a href="https://steamcommunity.com/id/' + snsJson[i].link + '" class="text-black"><i class="fa fa-steam-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
+                sns += '<a href="https://steamcommunity.com/id/' + snsJson[i].link + '" class="text-black" target="_blank"><i class="fa fa-steam-square fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
               }
               if(snsJson[i].type == "youtube"){
-                sns += '<a href="https://www.youtube.com/' + snsJson[i].link + '" class="text-black"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
+                sns += '<a href="https://www.youtube.com/' + snsJson[i].link + '" class="text-black" target="_blank"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i> /' + snsJson[i].link + '</a><br />';
               }
             }
 

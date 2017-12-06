@@ -123,11 +123,11 @@ if($_SESSION['userType'] != "normal"){
                               <div class="form-group">
                                 <label for="rating" class="text-black">Rating:</label>
                                 <select class="custom-select" name="rating" id="rating">
-                                  <option value="1.0" selected id="default">1.0</option>
-                                  <option value="2.0">2.0</option>
-                                  <option value="3.0">3.0</option>
-                                  <option value="4.0">4.0</option>
-                                  <option value="5.0">5.0</option>
+                                  <option value="1.0" selected id="default">1 Star</option>
+                                  <option value="2.0">2 Stars</option>
+                                  <option value="3.0">3 Stars</option>
+                                  <option value="4.0">4 Stars</option>
+                                  <option value="5.0">5 Stars</option>
                                 </select>
                               </div><!--form-group-->
                               <div class="form-group">

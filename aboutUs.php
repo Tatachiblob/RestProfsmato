@@ -121,9 +121,9 @@ if($_SESSION['userType'] != "normal"){
               <div style="line-height: 0.1rem;">
                 <p><a href="tel:+246 - 542 550 5462" class="text-white"><i class="fa d-inline mr-3 text-white fa-phone"></i>+63 927 895 0136</a></p>
       					<p><a href="mailto:info@pingendo.com" class="text-white"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>yuta_inoue@dlsu.edu.ph</a></p>
-      					<p><a href="https://facebook.com/yuta.inoue.583" class="text-white"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/yuta.inoue.583</a></p>
-      					<p><a href="https://twitter.com/YutaKikuchi53" class="text-white"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@YutaKikuchi53</a></p>
-      					<p><a href="https://instagram.com/yuta4532" class="text-white" target="blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@yuta4532</a></p>
+      					<p><a href="https://facebook.com/yuta.inoue.583" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/yuta.inoue.583</a></p>
+      					<p><a href="https://twitter.com/YutaKikuchi53" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@YutaKikuchi53</a></p>
+      					<p><a href="https://instagram.com/yuta4532" class="text-white" target="_blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@yuta4532</a></p>
               </div>
             </div>
           </div><!--/.card text-white bg-success-->
@@ -137,10 +137,10 @@ if($_SESSION['userType'] != "normal"){
               <p class="card-text">Front-end developer.</p><br />
               <div style="line-height: 0.1rem;">
                 <p><a href="tel:+246 - 542 550 5462" class="text-white"><i class="fa d-inline mr-3 text-white fa-phone"></i>+63 995 478 2797</a></p>
-      					<p><a href="mailto:info@pingendo.com" class="text-white"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>john_andrew_santiago@dlsu.edu.ph</a></p>
-      					<p><a href="https://facebook.com/andrewww.rog" class="text-white"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/andrewww.rog</a></p>
-      					<p><a href="https://twitter.com/@santiagoja_rog" class="text-white"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@santiagoja_rog</a></p>
-      					<p><a href="https://instagram.com/@santiagoja_rog" class="text-white" target="blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@santiagoja_rog</a></p>
+      					<p><a href="mailto:info@pingendo.com" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>john_andrew_santiago@dlsu.edu.ph</a></p>
+      					<p><a href="https://facebook.com/andrewww.rog" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/andrewww.rog</a></p>
+      					<p><a href="https://twitter.com/@santiagoja_rog" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@santiagoja_rog</a></p>
+      					<p><a href="https://instagram.com/@santiagoja_rog" class="text-white" target="blank" target="_blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@santiagoja_rog</a></p>
               </div>
             </div>
           </div><!--/.card text-white bg-success-->
@@ -154,10 +154,10 @@ if($_SESSION['userType'] != "normal"){
     				<p class="card-text">Quality Assurance.</p><br>
     				<div style="line-height: 0.1rem;">
     					<p><a href="tel:+246 - 542 550 5462" class="text-white"><i class="fa d-inline mr-3 text-white fa-phone"></i>+63 935 117 8429</a></p>
-    					<p><a href="mailto:info@pingendo.com" class="text-white"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>eduard_carlos@dlsu.edu.ph</a></p>
-    					<p><a href="https://facebook.com/Waaaaard" class="text-white"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/Waaaaard</a></p>
-    					<p><a href="https://twitter.com/EduardCG_" class="text-white"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@EduardCG_</a></p>
-    					<p><a href="https://instagram.com/emcg_" class="text-white" target="blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@emcg_</a></p>
+    					<p><a href="mailto:info@pingendo.com" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>eduard_carlos@dlsu.edu.ph</a></p>
+    					<p><a href="https://facebook.com/Waaaaard" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/Waaaaard</a></p>
+    					<p><a href="https://twitter.com/EduardCG_" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@EduardCG_</a></p>
+    					<p><a href="https://instagram.com/emcg_" class="text-white" target="blank" target="_blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@emcg_</a></p>
     				</div>
     			  </div>
     			</div>
@@ -175,8 +175,8 @@ if($_SESSION['userType'] != "normal"){
     				<p class="card-text">Front-end developer.</p><br>
     				<div style="line-height: 0.1rem;">
     					<p><a href="tel:+246 - 542 550 5462" class="text-white"><i class="fa d-inline mr-3 text-white fa-phone"></i>+63 932 385 1479</a></p>
-    					<p><a href="mailto:info@pingendo.com" class="text-white"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>nigel_tan@dlsu.edu.ph</a></p>
-    					<p><a href="https://facebook.com/nigelmarcus.tan" class="text-white"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/nigelmarcus.tan</a></p>
+    					<p><a href="mailto:info@pingendo.com" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>nigel_tan@dlsu.edu.ph</a></p>
+    					<p><a href="https://facebook.com/nigelmarcus.tan" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/nigelmarcus.tan</a></p>
     				</div>
     			  </div>
     			</div>
@@ -190,10 +190,10 @@ if($_SESSION['userType'] != "normal"){
     				<p class="card-text">Back-end developer.</p><br>
     				<div style="line-height: 0.1rem;">
     					<p><a href="tel:+246 - 542 550 5462" class="text-white"><i class="fa d-inline mr-3 text-white fa-phone"></i>+63 995 756 1818</a></p>
-    					<p><a href="mailto:info@pingendo.com" class="text-white"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>christian_nicole_alderite@dlsu.edu.ph</a></p>
-    					<p><a href="https://facebook.com/nicolealderite" class="text-white"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/nicolealderite</a></p>
-    					<p><a href="https://twitter.com/alderight" class="text-white"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@alderight</a></p>
-    					<p><a href="https://instagram.com/alderite" class="text-white" target="blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@alderight</a></p>
+    					<p><a href="mailto:info@pingendo.com" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-envelope-o"></i>christian_nicole_alderite@dlsu.edu.ph</a></p>
+    					<p><a href="https://facebook.com/nicolealderite" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-facebook"></i>/nicolealderite</a></p>
+    					<p><a href="https://twitter.com/alderight" class="text-white" target="_blank"><i class="fa d-inline mr-3 text-white fa-twitter"></i>@alderight</a></p>
+    					<p><a href="https://instagram.com/alderite" class="text-white" target="_blank"><i class="fa d-inline mr-3 fa-instagram text-white"></i>@alderight</a></p>
     				</div>
     			  </div>
     			</div>

@@ -136,6 +136,7 @@ if(isset($_SESSION['isLogin'])){
   </body>
   <script>
     function signUpFunction(username, firstName, lastName, p1, email, college, course, id){
+      console.log(id);
       if(username == "" || firstName == "" || lastName == "" || p1 == "" || email == "" || college == "" || course == "" || id == ""){
         $('#error').html("<h4>Please Enter All Fields</h4>");
       }else{
@@ -144,7 +145,7 @@ if(isset($_SESSION['isLogin'])){
         }else{
           $('#error').html("");
           var rest = "http://localhost:8080/profsmatodb/students";
-          var restBody = '{"username":"' + username + '", "password":"' + p1 + '", "email":"' + email + '", "lastname":"' + lastName + '", "firstname":"' + firstName + '", "contacts":[], "college":"' + college + '", "course":["", "' + course + '"], "usertype":"normal", "aboutme":"", "profilepic":"default.png", "status":"pending"}';
+          var restBody = '{"idnum":"' + id + '", "username":"' + username + '", "password":"' + p1 + '", "email":"' + email + '", "lastname":"' + lastName + '", "firstname":"' + firstName + '", "contacts":[], "college":"' + college + '", "course":["", "' + course + '"], "usertype":"normal", "aboutme":"", "profilepic":"default.png", "status":"pending"}';
           console.log(restBody);
           $.ajax({
             type: "POST",

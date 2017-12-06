@@ -125,9 +125,11 @@ if($_SESSION['userType'] != "admin"){
   				</div><!--/.input-group-->
           <br class="d-md-none d-lg-none">
         </div><!--/.col-md-6-->
+        <!--
         <div class="col-md-6">
   				<button type="button" class="btn btn-raised btn-primary" id="butt_filters">ADVANCED FILTERS</button>
   			</div>
+      -->
       </div><!--/.row mb-3-->
       <div class="row mb-3">
         <div class="col-md-7">

@@ -171,52 +171,57 @@ if($_SESSION['userType'] != "normal"){
         <div class="col-lg-6 grid-divider">
           <div class="container">
             <h3>Most Reviewed Profs</h3>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Neil Patrick Del Gallego (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Renato Jose Maria Molano (CLA)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Shirley Chu (COB)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Diane Lim (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Thomas James Tiam-Lee (SOE)</a>
-            </div>
+            <div id="mostRated">
+              <!--<div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Neil Patrick Del Gallego (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Renato Jose Maria Molano (CLA)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Shirley Chu (COB)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Diane Lim (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Thomas James Tiam-Lee (SOE)</a>
+              </div>-->
+            </div><!--/.mostRated-->
           </div><!--/.container-->
           <br />
         </div><!--/.col-lg-6 grid-divider-->
         <div class="col-lg-6">
           <div class="container">
             <h3>Highest Rated Profs</h3>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Jordan Deja (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Neil Patrick Del Gallego (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Briane Samson (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Glenn Sipin (CCS)</a>
-            </div>
-            <div>
-              <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
-              <a href="#" class="proflabel text-black">Oliver Malabanan (CCS)</a>
-            </div>
+            <div id="highestRated">
+              <!--
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Jordan Deja (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Neil Patrick Del Gallego (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Briane Samson (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Glenn Sipin (CCS)</a>
+              </div>
+              <div>
+                <img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">
+                <a href="#" class="proflabel text-black">Oliver Malabanan (CCS)</a>
+              </div>-->
+            </div><!--/#highestRated-->
           </div><!--/.container-->
         </div><!--/.col-lg-6-->
       </div><!--/.row-->
@@ -242,6 +247,71 @@ if($_SESSION['userType'] != "normal"){
   </body>
   <?php include 'navbarStlye.html' ?>
   <script>
+
+    function buildHtml(college, department, profid, profname){
+      var a = '<div>'
+            + '<img src="/com.phantomfive.profsmato/assets/designs/tomato.svg" style="width:5%;">'
+            + '<a href="/com.phantomfive.profsmato/College/' + college + '/' + department + '/' + profid + '" class="proflabel text-black">' + profname + '(' + college + ')</a>'
+            + '</div>';
+      return a;
+    }
+
+    function loadMostRated(){
+      var rest = "http://localhost:8080/profsmatodb/reviews/_aggrs/topFiveMostRated";
+      $.ajax({
+        type: "GET",
+        url: rest,
+        dataType: "json",
+        success: function(response){
+          response = response._embedded;
+          var html = '';
+          for(var i = 0; i < response.length; i++){
+            $.ajax({
+              type: "GET",
+              async: false,
+              url: "http://localhost:8080/profsmatodb/professors?filter={'profid':" + response[i]._id + "}",
+              success: function(response2){
+                var a = response2._embedded[0];
+                html += buildHtml(a.college, a.departments[0], a.profid, a.firstname + ' ' + a.lastname);
+              }
+            });
+          }
+          $('#mostRated').html(html);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
+
+    function loadMostReviewed(){
+      var rest = "http://localhost:8080/profsmatodb/reviews/_aggrs/topFiveMostReviews";
+      $.ajax({
+        type: "GET",
+        url: rest,
+        dataType: "json",
+        success: function(response){
+          response = response._embedded;
+          var html = '';
+          for(var i = 0; i < response.length; i++){
+            $.ajax({
+              type: "GET",
+              async: false,
+              url: "http://localhost:8080/profsmatodb/professors?filter={'profid':" + response[i]._id + "}",
+              success: function(response2){
+                var a = response2._embedded[0];
+                html += buildHtml(a.college, a.departments[0], a.profid, a.firstname + ' ' + a.lastname);
+              }
+            });
+          }
+          $('#highestRated').html(html);
+        },
+        error: function(jqXHR, exception){
+          console.log(jqXHR);
+        }
+      });
+    }
+
     $(document).ready(function() {
       $('body').bootstrapMaterialDesign();
       var firstName = "";
@@ -270,6 +340,9 @@ if($_SESSION['userType'] != "normal"){
           console.log(jqXHR.responseText);
         }
       });
+
+      loadMostRated();
+      loadMostReviewed();
     });
   </script>
 </html>

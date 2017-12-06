@@ -310,7 +310,7 @@ if(!isset($_GET['college'])){
   function showIT(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'IT'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'IT', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -352,7 +352,7 @@ if(!isset($_GET['college'])){
   function showST(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'ST'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'ST', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -394,7 +394,7 @@ if(!isset($_GET['college'])){
   function showCT(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'CT'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'CT', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -445,7 +445,7 @@ if(!isset($_GET['college'])){
   function showBIO(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'BIO'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'BIO', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -485,7 +485,7 @@ if(!isset($_GET['college'])){
   function showCHEM(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'CHEM'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'CHEM', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -525,7 +525,7 @@ if(!isset($_GET['college'])){
   function showMATH(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'MATH'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'MATH', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -565,7 +565,7 @@ if(!isset($_GET['college'])){
   function showPHY(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'PHY'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'PHY', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);
@@ -607,7 +607,7 @@ if(!isset($_GET['college'])){
   function showCOL(){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'COL'}",
+      url: "http://localhost:8080/profsmatodb/professors?page=1&pagesize=4&filter={'departments':'COL', 'status':'active'}",
       dataType: "json",
       success: function(response){
         console.log(response);

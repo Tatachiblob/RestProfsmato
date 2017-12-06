@@ -23,7 +23,7 @@
     			<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requests</a>
     			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
     			  <a class="dropdown-item" href="/com.phantomfive.profsmato/Admin/Registration">Registration</a>
-    			  <a class="dropdown-item" href="#">Professors</a>
+    			  <a class="dropdown-item" href="/com.phantomfive.profsmato/Admin/ProfRequest">Professors</a>
     			</div>
   		  </li><!--/.nav-item dropdown-->
       </ul><!--/.navbar-nav mr-auto-->
